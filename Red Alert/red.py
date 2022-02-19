@@ -53,3 +53,21 @@ def make_stars(number_of_extra_stars):
     animate_stars(new_stars)
     return new_stars
 
+
+
+def get_colors_to_create(number_of_extra_stars):
+    colors_to_create = ["red"]
+    for i in range(0, number_of_extra_stars):
+        random_color
+
+def create_stars(colors_to_create):
+    return[]
+
+def layout_stars(stars_to_layout):
+    return[]
+
+def animate_stars(stars_to_animate):
+    pass
+
+
+pgzrun.go()
