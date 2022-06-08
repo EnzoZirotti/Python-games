@@ -18,7 +18,7 @@ answer_box4 = Rect(0, 0, 495, 165)
 
 main_box.move_ip(50, 40)
 
-timer_box.move_ip(50, 40)
+timer_box.move_ip(990, 40)
 
 answer_box1.move_ip(50, 358)
 
@@ -34,6 +34,34 @@ score = 0
 
 time_left = 10
 
+q1 = ["What is the capital of France?", "London", "Paris", "Berlin", "Tokyo", 2]
+
+q2 = ["What is 5 + 7?",
+      "12", "10", "14", "8", 1]
+
+q3 = ["What is the seventh month of the year?",
+      "April", "May", "June", "July", 4]
+
+q4 = ["Which planet is closest to the sun?",
+      "Saturn", "Neptune", "Mercury", "Venus", 3]
+
+q5 = ["Where are the pyramids",
+      "India", "Egypt", "Morocco", "Canada", 2]
+
+q6 = ["What is a quarter of 200",
+      "50", "100", "300", "25", 1]
+
+q7 = ["What is the capital of Idaho",
+      "Coeur D' alene", "Boise", "Billings", "Butte", 2]
+
+q8 = ["Where is Carmen San Diego",
+      "Colorado", "Montana", "San Dieog", "Perris", 3]
+
+questions = [q1, q2, q3, q4, q5, q6, q7, q8]
+
+
+question = questions.pop(0)
+
 def draw():
     screen.fill("dim gray")
     screen.draw.filled_rect(main_box, "sky blue")
@@ -43,16 +71,66 @@ def draw():
     for box in answer_boxes:
         screen.draw.filled_rect(box, "orange")
 
+
+
+    screen.draw.textbox(str(time_left), timer_box, color=("black"))
+    screen.draw.textbox(question[0], main_box, color=("black"))
+
+    index = 1
+
+    for box in answer_boxes:
+        screen.draw.textbox(question[index], box, color=("black"))
+        index = index + 1
+
 def game_over():
-    pass
+    global question, time_left
+    message = "Game over. You got %s questions correct" % str(score)
+    question = [message, "-", "-", "-", "-", 5]
+    time_left = 0
 
 def correct_answer():
-    pass
+    global question, score,time_left
+    score = score + 1
+    if questions:
+        question = questions.pop(0)
+        time_left = 10
+    else:
+        print("End of questions")
+        game_over()
 
 def on_mouse_down(pos):
-    pass
+    index = 1
+    for box in answer_boxes:
+        if box.collidepoint(pos):
+            print("Clicked on answer" + str(index))
+            if index == question[5]:
+                print("You got it Correct!")
+                correct_answer()
+            else:
+                game_over()
+        index = index + 1
 
 def update_time_left():
-    pass
+    global time_left
 
+
+    if time_left:
+        time_left = time_left - 1
+    else:
+        game_over()
+
+
+def on_key_up(key):
+    if key == keys.H:
+        print("The correct answer is box number %s" % question[5])
+    if key == keys.SPACE:
+        score = score - 1
+        correct_answer()
+
+
+
+
+
+
+clock.schedule_interval(update_time_left, 1.0)
 pgzrun.go()
