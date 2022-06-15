@@ -95,3 +95,27 @@ def update():
             score += 1
             number_of_updates = 0
 
+        if house.right > 0:
+            house.x -= 2
+        else:
+            house.x = randint(800, 1600)
+            score += 1
+
+        if tree.right > 0:
+            tree.x -= 2
+        else:
+            tree.x = randint(800, 1600)
+            score += 1
+
+        if balloon.top < 0 or balloon.bottom > 560:
+            game_over = True
+            update_high_score()
+
+        if balloon.collidepoint(bird.x, bird.y) or \
+            balloon.collidepoint(house.x, house.y) or \
+            balloon.collidepoint(tree.x, tree.y):
+                game_over = True
+                update_high_score()
+
+
+pgzrun.go()
