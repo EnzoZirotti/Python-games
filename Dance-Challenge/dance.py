@@ -1,3 +1,5 @@
+from re import M
+from tkinter import font
 import pgzrun
 from random import randint
 
@@ -56,6 +58,10 @@ def draw():
 
         if show_countdown:
             screen.draw.text(str(count), color="black", topleft = (CENTER_X - 8, 150), fontsize=60)
+    else:
+        screen.clear()
+        screen.blit("stage", (0,0))
+        screen.draw.text("Score: "+str(score), color="black", topleft = (CENTER_X - 130, 220),fontsize=60)
     return
 
 def reset_dancer():
@@ -113,7 +119,25 @@ def display_moves():
     return
 
 def generate_moves():
-    pass
+    global move_list, dance_length, count
+
+    global show_countdown, say_dance
+
+    count=4
+
+    move_list = []
+
+    say_dance = False
+
+    for movw in range(0, dance_length):
+        rand_move = randint(0, 3)
+        move_list.append(rand_move)
+        display_list.append(rand_move)
+    show_countdown = True
+    countdown()
+    return
+
+
 
 def couuntdown():
     global count, game_over, show_countdown
