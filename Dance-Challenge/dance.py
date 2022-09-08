@@ -129,7 +129,7 @@ def generate_moves():
 
     say_dance = False
 
-    for movw in range(0, dance_length):
+    for move in range(0, dance_length):
         rand_move = randint(0, 3)
         move_list.append(rand_move)
         display_list.append(rand_move)
