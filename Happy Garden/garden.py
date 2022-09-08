@@ -53,6 +53,13 @@ def draw():
                     topleft=(10, 50)
                 )
                 finalized = True
+            else:
+                screen.draw.text(
+                    "FANGFLOWER ATTACK-GAME OVER!", color="black",
+                    topleft=(10, 50)
+                )
+                finalized = True
+    return
             
 def new_flower():
         global flower_list, wilted_list
@@ -104,7 +111,13 @@ def check_flower_collision():
         index = index + 1
     return
 def check_fangflower_collision():
-    pass
+    global cow, fangflower_list, fangflower_collision
+    global game_over
+    for fangflower in fangflower_list:
+        if fangflower.colliderect(cow):
+            cow.image = "zap"
+            game_over = True
+    return
 
 def velocity():
     random_dir = randint(0,1)
@@ -165,6 +178,7 @@ wilt_flower()
 def update():
     global score, game_over, fangflower_collision
     global flower_list, fangflower_list, time_elapsed
+    fangflower_collision = check_fangflower_collision()
     check_wilt_times()
     if not game_over:
         if keyboard.space:
@@ -179,6 +193,9 @@ def update():
             cow.y -= 5
         elif keyboard.down and cow.y < HEIGHT:
             cow.y += 5
+        if time_elapsed > 15 and not fangflower_list:
+            mutate()
+        update_fangflowers()
 
 
 pgzrun.go()
